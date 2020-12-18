@@ -1,4 +1,4 @@
-.PHONY: all clean check
+.PHONY: all clean check test
 include CONFIG.cfg
 BLD_OBJS = $(BUILD_DIR)/main.o $(BUILD_DIR)/main_work.o
 CC = gcc
@@ -6,6 +6,7 @@ LD = gcc
 TARGET = $(BUILD_DIR)/$(NAME)
 INP = $(wildcard $(TEST_DIR)/*.in)
 LOG = $(INP:$(TEST_DIR)/%.in=$(BUILD_DIR)/%.log)
+ERR = $(BUILD_DIR)/error_with_checks
 
 all: $(TARGET) 
 
@@ -19,9 +20,14 @@ $(BUILD_DIR):
 	@mkdir -p $@
 
 clean:	
-	$(RM) $(BUILD_DIR)/$(NAME) $(BLD_OBJS) $(LOG)
+	$(RM) $(BUILD_DIR)/$(NAME) $(BLD_OBJS) $(LOG) $(ERR)
 
 check:	$(LOG) 
+	@if [ -e $(ERR) ] ; then \
+	printf "\n\nResults of checks are:\n" ; \
+	cat $(ERR); \
+		exit 1; \
+	fi
 	
 $(LOG): $(BUILD_DIR)/%.log:	$(TEST_DIR)/%.in $(TARGET)
 	@$(BUILD_DIR)/sorter $< >$@
@@ -29,4 +35,5 @@ $(LOG): $(BUILD_DIR)/%.log:	$(TEST_DIR)/%.in $(TARGET)
 		echo Test $* has finished succesfully; \
 	else \
 		echo Test $* has failed; \
+		printf "Test $* has failed\n" >> $(ERR); \
 	fi
