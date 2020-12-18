@@ -1,4 +1,4 @@
-.PHONY: all clean check test
+.PHONY: all clean check
 include CONFIG.cfg
 BLD_OBJS = $(BUILD_DIR)/main.o $(BUILD_DIR)/main_work.o
 CC = gcc
