@@ -33,7 +33,7 @@ check:	$(LOG)
 $(LOG): $(BUILD_DIR)/%.log:	$(TEST_DIR)/%.in $(TARGET)
 	@$(BUILD_DIR)/sorter $< >$@
 	@if cmp -s $(TEST_DIR)/$*.out $@; then \
-		echo Test $* has finished succesfully; \
+		echo Test $* has finished successfully; \
 	else \
 		echo Test $* has failed; \
 		printf "Test $* has failed\n" >> $(ERR); \
