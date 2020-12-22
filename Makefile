@@ -29,11 +29,11 @@ check:	$(LOG)
 		$(RM) $(ERR); \
 		exit 1; \
 	fi
-	
+
 $(LOG): $(BUILD_DIR)/%.log:	$(TEST_DIR)/%.in $(TARGET)
-	@$(BUILD_DIR)/sorter $< >$@
+	@$(TARGET) $< >$@
 	@if cmp -s $(TEST_DIR)/$*.out $@; then \
-		echo Test $* has finished successfully; \
+		echo Test $* has finished succesfully; \
 	else \
 		echo Test $* has failed; \
 		printf "Test $* has failed\n" >> $(ERR); \
