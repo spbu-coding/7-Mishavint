@@ -19,9 +19,6 @@ $(TARGET): $(BLD_OBJS)| $(BUILD_DIR)
 $(BUILD_DIR):	
 	@mkdir -p $@
 
-help:
-	@echo $(LOG)
-
 clean:	
 	$(RM) $(BUILD_DIR)/$(NAME) $(BLD_OBJS) $(LOG)
 
